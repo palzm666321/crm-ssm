@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/action")
@@ -20,13 +21,20 @@ public class ActionController {
     private ActionService actionService;
 
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
-    public ModelAndView doLogin(String name, String password,HttpServletRequest request)throws LoginException {
+    public String doLogin(String name, String password, HttpServletRequest request)throws LoginException {
         ModelAndView mv=new ModelAndView();
         String ip=request.getRemoteAddr();
         User user = actionService.login(name, password, ip);
-        mv.addObject("user",user);
-       // mv.setViewName("forward:/WEB-INF/workbench/index.jsp");
-        mv.setViewName("index");
+        request.getSession().setAttribute("user",user);
+    //    mv.addObject("user",user);
+    //    mv.setViewName("index");
+        return "index";
+    }
+
+    @RequestMapping(value = "/index.do")
+    public ModelAndView doIndex(){
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("main/index");
         return mv;
     }
 

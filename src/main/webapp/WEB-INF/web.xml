@@ -51,6 +51,25 @@
         <param-value>classpath:applicationContext-*.xml</param-value>
     </context-param>
 
+<!--    设置监听器-->
+    <listener>
+        <listener-class>com.bjpowernode.listener.SysInitListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>dwr</servlet-name>
+        <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dwr</servlet-name>
+        <url-pattern>/dwr/*</url-pattern>
+    </servlet-mapping>
+
+
 
 <!--欢迎页面-->
     <welcome-file-list>

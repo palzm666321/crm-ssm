@@ -1,14 +1,13 @@
 package com.bjpowernode.mapper;
 
+import com.bjpowernode.domain.Clue;
 import com.bjpowernode.domain.User;
 
 import java.util.List;
 import java.util.Map;
 
-public interface UserMapper {
+public interface ClueMapper {
 
-    User getByUser(Map<String,String> map);
-
-    List<User> getAll();
+    int addClue(Clue clue);
 
 }
