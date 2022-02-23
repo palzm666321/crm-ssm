@@ -25,15 +25,12 @@ public class ClueController {
     public ModelAndView doIndex(){
         ModelAndView mv=new ModelAndView();
         mv.addObject("userAll",userService.getAll());
+        mv.addObject("clueAll",clueService.getAll());
         mv.setViewName("clue/index");
         return mv;
     }
 
-    public void doInsert(Clue clue){
-        clue.setId(UUIDUtil.getUUID());
-        System.out.println("爱上大傻傻的");
-        clueService.addClue(clue);
-    }
+
 
 
 }

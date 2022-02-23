@@ -7,36 +7,32 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class PrintJson {
+public class JSONObject {
 	
 	//将boolean值解析为json串
-	public static void printJsonFlag(HttpServletResponse response,boolean flag){
+	public static String JsonFlag(boolean flag){
 		
 		Map<String,Boolean> map = new HashMap<String,Boolean>();
 		map.put("success",flag);
-		
+		String json = null;
 		ObjectMapper om = new ObjectMapper();
-		try {
 			//{"success":true}
-			String json = om.writeValueAsString(map);
-			response.getWriter().print(json);
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		try {
+			json = om.writeValueAsString(map);
+		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		
-		
+		return json;
+	
 		
 	}
 	
 	//将对象解析为json串
-	public static void printJsonObj(HttpServletResponse response,Object obj){
+	public static String JsonObj(Object obj){
 		
 		/*
 		 * 
@@ -55,19 +51,15 @@ public class PrintJson {
 		 */
 		
 		ObjectMapper om = new ObjectMapper();
+		String json = null;
 		try {
-			String json = om.writeValueAsString(obj);
-			response.getWriter().print(json);
-		} catch (JsonGenerationException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			json = om.writeValueAsString(obj);
+
+		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
+		return json;
+
 	}
 	
 }
