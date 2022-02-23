@@ -10,11 +10,13 @@ public interface ClueMapper {
 
     int addClue(Clue clue);
 
-    List<Clue> getAll();
+    List<Clue> getAll(Clue clue);
 
     Clue getClueById(String id);
 
     int updateClue(Clue clue);
 
     int deleteClue(String id);
+
+    List<Clue> findClueLikeList(Clue clue);
 }

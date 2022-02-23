@@ -1,7 +1,7 @@
 package com.bjpowernode.service;
 
 import com.bjpowernode.domain.Clue;
-import com.bjpowernode.domain.User;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -41,5 +41,11 @@ public interface ClueService {
      * @return true成功，false失败
      */
     boolean deleteClueById(String id);
+
+    /**
+     * pagehelper分页查信息
+     * @return
+     */
+    PageInfo<Clue> splitPage(Clue clue,Integer pageNo,Integer pageSize);
 
 }

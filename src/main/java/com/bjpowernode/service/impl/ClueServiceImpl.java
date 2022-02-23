@@ -10,6 +10,8 @@ import com.bjpowernode.utils.DateTimeUtil;
 import com.bjpowernode.utils.JSONObject;
 import com.bjpowernode.utils.MD5Util;
 import com.bjpowernode.utils.UUIDUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.directwebremoting.annotations.RemoteMethod;
 import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.json.JsonObject;
@@ -34,7 +36,7 @@ public class ClueServiceImpl implements ClueService {
 
     @Override
     public List<Clue> getAll() {
-        return clueMapper.getAll();
+        return clueMapper.getAll(new Clue());
     }
 
     @Override
@@ -51,5 +53,13 @@ public class ClueServiceImpl implements ClueService {
     @Override
     public boolean deleteClueById(String id) {
         return clueMapper.deleteClue(id) == 1;
+    }
+
+    @Override
+    public PageInfo<Clue> splitPage(Clue clue,Integer page, Integer size) {
+        PageHelper.startPage(page,size);
+        List<Clue> movies = clueMapper.getAll(clue);
+        PageInfo<Clue> pageInfo = new PageInfo<> (movies);
+        return pageInfo;
     }
 }

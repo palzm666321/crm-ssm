@@ -11,11 +11,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<meta charset="UTF-8">
 <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
 
 <script type="text/javascript"  src="jquery/jquery-1.11.1-min.js"></script>
 <script type="text/javascript"  src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 <script type="text/javascript"  src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript"  src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
 <script type="text/javascript" src="dwr/engine.js"></script>
 <script type="text/javascript" src="dwr/util.js"></script>
 <script type="text/javascript" src="dwr/interface/clueServiceImpl.js"></script>
@@ -31,8 +34,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			todayBtn: true,
 			pickerPosition: "top-left"
 		});
-	});
 
+	});
 
 	//保存线索
 	function save(){
@@ -417,7 +420,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<div class="form-group">
 								<label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
 								<div class="col-sm-10" style="width: 300px;">
-									<input type="text" class="form-control" id="edit-nextContactTime" name="editNextContactTime">
+									<input type="text" class="form-control time" id="edit-nextContactTime" name="editNextContactTime">
 								</div>
 							</div>
 						</div>
@@ -461,50 +464,51 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
 	
 		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
-		
+
+			<%--<input type="hidden" id="hidden-fullname">
+			<input type="hidden" id="hidden-job">
+			<input type="hidden" id="hidden-phone">
+			<input type="hidden" id="hidden-mphone">
+			<input type="hidden" id="hidden-owner">
+			<input type="hidden" id="hidden-state">
+			<input type="hidden" id="hidden-source">--%>
+
+
 			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
-				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-				  
-				  <div class="form-group">
+				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;" action="clue/index.do" id="qf">
+
+					<input type="hidden" id="pageNum" name="pageNum" value="${clueSplitAll.pageNum}">
+					<input type="hidden" id="pageSize" name="pageSize" value="${clueSplitAll.pageSize}">
+
+					<div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="fullname" name="fullname">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">公司</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="job" name="job">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">公司座机</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="phone" name="phone">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">线索来源</div>
-					  <select class="form-control">
+					  <select class="form-control" id="source" name="source">
 					  	  <option></option>
-					  	  <option>广告</option>
-						  <option>推销电话</option>
-						  <option>员工介绍</option>
-						  <option>外部介绍</option>
-						  <option>在线商场</option>
-						  <option>合作伙伴</option>
-						  <option>公开媒介</option>
-						  <option>销售邮件</option>
-						  <option>合作伙伴研讨会</option>
-						  <option>内部研讨会</option>
-						  <option>交易会</option>
-						  <option>web下载</option>
-						  <option>web调研</option>
-						  <option>聊天</option>
+						  <c:forEach items="${source}" var="a">
+							  <option value="${a.value}">${a.text}</option>
+						  </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -514,7 +518,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="owner" name="owner">
 				    </div>
 				  </div>
 				  
@@ -523,22 +527,18 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">手机</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="mphone" name="mphone">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">线索状态</div>
-					  <select class="form-control">
+					  <select class="form-control" id="state" name="state">
 					  	<option></option>
-					  	<option>试图联系</option>
-					  	<option>将来联系</option>
-					  	<option>已联系</option>
-					  	<option>虚假线索</option>
-					  	<option>丢失线索</option>
-					  	<option>未联系</option>
-					  	<option>需要条件</option>
+						  <c:forEach items="${clueState}" var="a">
+							  <option value="${a.value}">${a.text}</option>
+						  </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -553,11 +553,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				  <button type="button" class="btn btn-default"  onclick="updateBtn()"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger" onclick="drop()"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
-				
-				
 			</div>
 			<div style="position: relative;top: 50px;">
-				<table class="table table-hover">
+				<table class="table table-hover" id="paging_table">
+
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" id="fx"/></td>
@@ -572,62 +571,127 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					</thead>
 					<tbody>
 
-                    <c:forEach items="${clueAll}" var="c">
-
-                        <tr>
-                            <td><input type="checkbox" name="dx" value="${c.id}"/></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">${c.fullname}${c.appellation}</a></td>
-                            <td>${c.job}</td>
-                            <td>${c.phone}</td>
-                            <td>${c.mphone}</td>
-                            <td>${c.company}</td>
-                            <td>${c.owner}</td>
-                            <td>${c.state}</td>
-                        </tr>
-
-                    </c:forEach>
-
-
-
+					<c:forEach items="${clueSplitAll.list}" var="c">
+						<tr>
+							<td><input type="checkbox" name="dx" value="${c.id}"/></td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">${c.fullname}${c.appellation}</a></td>
+							<td>${c.job}</td>
+							<td>${c.phone}</td>
+							<td>${c.mphone}</td>
+							<td>${c.company}</td>
+							<td>${c.owner}</td>
+							<td>${c.state}</td>
+						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>
-			
-			<div style="height: 50px; position: relative;top: 60px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-			
+
+				<br><br>
+
+	<div>
+		<nav aria-label="Page navigation">
+			<ul class="pagination">
+				<li id="first">
+					<a href="javascript:void(0);">
+						<span aria-hidden="true">首页</span>
+					</a>
+				</li>
+				<li id="prev">
+					<a href="javascript:void(0);" aria-label="Previous">
+						<span aria-hidden="true">上一页</span>
+					</a>
+				</li>
+
+				<c:forEach items="${clueSplitAll.navigatepageNums}" var="i">
+					<li name="pageNum" <c:if test="${i == clueSplitAll.pageNum}">class="active" </c:if> ><a href="javascript:void(0);">${i}</a> </li>
+				</c:forEach>
+
+				<li id="next">
+					<a href="javascript:void(0);" aria-label="Next">
+						<span aria-hidden="true">下一页</span>
+					</a>
+				</li>
+
+				<li id="last">
+					<a href="javascript:void(0);">
+						<span aria-hidden="true">末页</span>
+					</a>
+				</li>
+				<span style="font-size: 20px;margin-left: 5px">
+						共条 ${clueSplitAll.total} 记录，共${clueSplitAll.pages}页，每页行数
+					<select id="setRows">
+						<option value="5" <c:if test="${5 == clueSplitAll.pageSize}">selected</c:if> >5</option>
+						<option value="10" <c:if test="${10 == clueSplitAll.pageSize}">selected</c:if> >10</option>
+						<option value="20" <c:if test="${20 == clueSplitAll.pageSize}">selected</c:if> >20</option>
+						<option value="30" <c:if test="${30 == clueSplitAll.pageSize}">selected</c:if> >30</option>
+					</select>
+				</span>
+			</ul>
+		</nav>
+	</div>
+
+	<script>
+
+		//1:初始化变量
+		var pageNum=${clueSplitAll.pageNum};//当前页码
+		var pages=${clueSplitAll.pages};//总页数
+		var hasPreviousPage=${clueSplitAll.hasPreviousPage};//还有上一页
+		var hasNextPage =${clueSplitAll.hasNextPage};//还有下一页
+		//2:判断按钮状态
+		if (!hasPreviousPage){
+			$("#prev").addClass("disabled");
+			$("#first").addClass("disabled");
+		}
+		if (!hasNextPage){
+			$("#next").addClass("disabled");
+			$("#last").addClass("disabled");
+		}
+		//3：按钮事件监听
+		$("#first").click(function (){
+			if (!$("#first").hasClass("disabled")){
+				$("#pageNum").val(1);
+				$("#qf").submit();
+			}
+		})
+		$("#prev").click(function (){
+			if (!$("#prev").hasClass("disabled")){
+				$("#pageNum").val(pageNum-1);
+				$("#qf").submit();
+			}
+		})
+		$("#next").click(function (){
+			if (!$("#next").hasClass("disabled")){
+				$("#pageNum").val(pageNum+1);
+				$("#qf").submit();
+			}
+		})
+		$("#last").click(function (){
+			if (!$("#last").hasClass("disabled")){
+				$("#pageNum").val(pages);
+				$("#qf").submit();
+			}
+		})
+
+		//4:每页行数改变事件监听
+		$("#setRows").change(function (){
+				$("#pageSize").val($(this).val());
+				$("#pageNum").val(1);
+				$("#qf").submit();
+
+		})
+		//5:点击页码事件监听
+		$("li[name='pageNum']").click(function (){
+			if(!$(this).hasClass("active")){
+				$("#pageNum").val($(this).children("a").html());
+				$("#qf").submit();
+			}
+		})
+
+	</script>
+
+
+
 		</div>
 		
 	</div>
