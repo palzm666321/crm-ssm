@@ -35,7 +35,16 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			pickerPosition: "top-left"
 		});
 
+		$("#qx").click(function (){
+			$("input[name=dx]").prop("checked",this.checked);
+		})
+		$("#body").on("click","input[name=dx]",function (){
+			$("#qx").prop("checked",$("input[name=dx]:checked").length == $("input[name=dx]").length);
+		})
+
 	});
+
+
 
 	//保存线索
 	function save(){
@@ -56,54 +65,44 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		clueMap.company=clueAddForm.createCompany.value;
 		clueMap.job=clueAddForm.createJob.value;
 		clueMap.email=clueAddForm.createEmail.value;
-		clueServiceImpl.addClue(clueMap,saveFun)
-
+		clueServiceImpl.addClue(clueMap,function (data){
+			if(data){
+				alert("创建成功！！");
+				window.location.href="clue/index.do";
+			}else{
+				alert("创建失败！！");
+			}
+		})
 	}
-
-	//保存线索回调函数
-	function saveFun(data){
-		if(data){
-			alert("创建成功！！");
-			window.location.href="clue/index.do";
-		}else{
-			alert("创建失败！！");
-			window.location.href="clue/index.do";
-		}
-	}
-
 
     //修改线索前的页面加载
     function updateBtn(){
         var xz=$("input[name=dx]:checked");
-        if (xz.length < 0){
+        if (xz.length < 1){
             alert("请选择要修改的线索")
         }else if (xz.length > 1){
             alert("只能选择一个线索进行修改")
         }else{
-            clueServiceImpl.getClueById(xz.val(),callback);
+            clueServiceImpl.getClueJsonById(xz.val(),function (data){
+				clueUpdateForm.editSurname.value=data.fullname;
+				clueUpdateForm.editContactSummary.value=data.contactSummary;
+				clueUpdateForm.editWebsite.value=data.website;
+				clueUpdateForm.editNextContactTime.value=data.nextContactTime;
+				clueUpdateForm.editAddress.value=data.address;
+				clueUpdateForm.editDescribe.value=data.description;
+				clueUpdateForm.editPhone.value=data.phone;
+				clueUpdateForm.editMphone.value=data.mphone;
+				clueUpdateForm.editStatus.value=data.state;
+				clueUpdateForm.editSource.value=data.source;
+				clueUpdateForm.editCall.value=data.appellation;
+				clueUpdateForm.editOwner.value=data.owner;
+				clueUpdateForm.editCompany.value=data.company;
+				clueUpdateForm.editJob.value=data.job;
+				clueUpdateForm.editEmail.value=data.email;
+				$("#editClueModal").modal("show")
+			});
         }
     }
-
-	//修改线索前的回调函数
-	function callback(data){
-		var json=eval("("+data+")");
-		clueUpdateForm.editSurname.value=json.fullname;
-		clueUpdateForm.editContactSummary.value=json.contactSummary;
-		clueUpdateForm.editWebsite.value=json.website;
-		clueUpdateForm.editNextContactTime.value=json.nextContactTime;
-		clueUpdateForm.editAddress.value=json.address;
-		clueUpdateForm.editDescribe.value=json.description;
-		clueUpdateForm.editPhone.value=json.phone;
-		clueUpdateForm.editMphone.value=json.mphone;
-		clueUpdateForm.editStatus.value=json.state;
-		clueUpdateForm.editSource.value=json.source;
-		clueUpdateForm.editCall.value=json.appellation;
-		clueUpdateForm.editOwner.value=json.owner;
-		clueUpdateForm.editCompany.value=json.company;
-		clueUpdateForm.editJob.value=json.job;
-		clueUpdateForm.editEmail.value=json.email;
-		$("#editClueModal").modal("show")
-	}
 
 	//修改线索
     function update(){
@@ -125,44 +124,37 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		clueMap.company=clueUpdateForm.editCompany.value;
 		clueMap.job=clueUpdateForm.editJob.value;
 		clueMap.email=clueUpdateForm.editEmail.value;
-		clueServiceImpl.updateClue(clueMap,updateFun)
+		clueServiceImpl.updateClue(clueMap,function (data){
+			if(data){
+				alert("修改成功！！");
+				window.location.href="clue/index.do";
+			}else{
+				alert("修改失败！！");
+			}
+		})
+
+
     }
-
-	//修改线索回调函数
-	function updateFun(data){
-		if(data){
-			alert("修改成功！！");
-			window.location.href="clue/index.do";
-		}else{
-			alert("修改失败！！");
-			window.location.href="clue/index.do";
-		}
-	}
-
-
 
 	//删除线索
 	function drop(){
 		var xz=$("input[name=dx]:checked");
-		if (xz.length < 0){
+		if (xz.length < 1){
 			alert("请选择要删除的线索")
 		}else if (xz.length > 1){
 			alert("只能选择一个线索进行删除")
 		}else{
-			clueServiceImpl.deleteClueById(xz.val(),dropFun);
+			clueServiceImpl.deleteClueById(xz.val(),function(data){
+				if(data){
+					alert("删除成功！！");
+					window.location.href="clue/index.do";
+				}else{
+					alert("删除失败！！");
+				}
+			});
 		}
 	}
 
-	//删除线索回调函数
-	function dropFun(data){
-		if(data){
-			alert("删除成功！！");
-			window.location.href="clue/index.do";
-		}else{
-			alert("删除失败！！");
-			window.location.href="clue/index.do";
-		}
-	}
 
 </script>
 </head>
@@ -559,7 +551,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" id="fx"/></td>
+							<td><input type="checkbox" id="qx"/></td>
 							<td>名称</td>
 							<td>公司</td>
 							<td>公司座机</td>
@@ -569,12 +561,12 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<td>线索状态</td>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="body">
 
 					<c:forEach items="${clueSplitAll.list}" var="c">
 						<tr>
 							<td><input type="checkbox" name="dx" value="${c.id}"/></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">${c.fullname}${c.appellation}</a></td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='clue/detail.do?id=${c.id}';">${c.fullname}${c.appellation}</a></td>
 							<td>${c.job}</td>
 							<td>${c.phone}</td>
 							<td>${c.mphone}</td>

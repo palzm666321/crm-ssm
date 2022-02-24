@@ -17,6 +17,7 @@ import org.directwebremoting.annotations.RemoteProxy;
 import org.directwebremoting.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -25,7 +26,6 @@ public class ClueServiceImpl implements ClueService {
 
     @Autowired
     private ClueMapper clueMapper;
-
 
     @Override
     public boolean addClue(Clue clue) {
@@ -40,8 +40,15 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
-    public String getClueById(String id) {
-        return JSONObject.JsonObj(clueMapper.getClueById(id));
+    @ResponseBody
+    public Clue getClueJsonById(String id) {
+        return clueMapper.getClueJsonById(id);
+    }
+
+
+    @Override
+    public Clue getClueById(String id) {
+        return clueMapper.getClueById(id);
     }
 
     @Override

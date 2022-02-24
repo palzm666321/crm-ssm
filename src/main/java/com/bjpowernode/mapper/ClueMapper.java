@@ -14,9 +14,10 @@ public interface ClueMapper {
 
     Clue getClueById(String id);
 
+    Clue getClueJsonById(String id);
+
     int updateClue(Clue clue);
 
     int deleteClue(String id);
 
-    List<Clue> findClueLikeList(Clue clue);
 }

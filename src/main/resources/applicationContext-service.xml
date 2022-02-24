@@ -5,6 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="clueServiceImpl" class="com.bjpowernode.service.impl.ClueServiceImpl"/>
+    <bean id="clueRemarkServiceImpl" class="com.bjpowernode.service.impl.ClueRemarkServiceImpl"/>
+    <bean id="ClueActivityRelationServiceImpl" class="com.bjpowernode.service.impl.ClueActivityRelationServiceImpl"/>
+    <bean id="clueActivityRelationService" class="com.bjpowernode.service.impl.ClueActivityRelationServiceImpl"/>
 
     <context:component-scan base-package="com.bjpowernode.service"/>
 

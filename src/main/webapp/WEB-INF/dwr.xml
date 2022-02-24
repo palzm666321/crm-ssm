@@ -9,5 +9,17 @@
       <param name="beanName" value="clueServiceImpl"/>
     </create>
     <convert converter="bean" match="com.bjpowernode.domain.Clue"/>
+
+    <create creator="spring" javascript="clueRemarkServiceImpl">
+      <param name="beanName" value="clueRemarkServiceImpl"/>
+    </create>
+    <convert converter="bean" match="com.bjpowernode.domain.ClueRemark"/>
+
+    <create creator="spring" javascript="ClueActivityRelationServiceImpl">
+      <param name="beanName" value="ClueActivityRelationServiceImpl"/>
+    </create>
+    <convert converter="bean" match="com.bjpowernode.domain.ClueActivityRelationVo"/>
+    <convert converter="bean" match="com.bjpowernode.domain.ClueActivityRelation"/>
+
   </allow>
 </dwr>

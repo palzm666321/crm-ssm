@@ -26,16 +26,12 @@ public class ActionController {
         String ip=request.getRemoteAddr();
         User user = actionService.login(name, password, ip);
         request.getSession().setAttribute("user",user);
-    //    mv.addObject("user",user);
-    //    mv.setViewName("index");
         return "index";
     }
 
     @RequestMapping(value = "/index.do")
-    public ModelAndView doIndex(){
-        ModelAndView mv=new ModelAndView();
-        mv.setViewName("main/index");
-        return mv;
+    public String doIndex(){
+        return "main/index";
     }
 
 

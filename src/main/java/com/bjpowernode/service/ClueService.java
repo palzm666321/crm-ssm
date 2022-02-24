@@ -26,7 +26,14 @@ public interface ClueService {
      * @param id 线索id
      * @return json格式的clue
      */
-    String getClueById(String id);
+    Clue getClueJsonById(String id);
+
+    /**
+     * 根据id查找线索
+     * @param id 线索id
+     * @return json格式的clue
+     */
+    Clue getClueById(String id);
 
     /**
      * 修改线索
