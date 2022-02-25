@@ -10,4 +10,5 @@ public interface ClueRemarkMapper {
     int addClueRemark(ClueRemark clueRemark);
     List<ClueRemark> getClueRemarkByIdAll(String id);
 
+    int delete(ClueRemark clueRemark);
 }

@@ -1,6 +1,7 @@
 package com.bjpowernode.mapper;
 
 import com.bjpowernode.domain.Clue;
+import com.bjpowernode.domain.Tran;
 import com.bjpowernode.domain.User;
 
 import java.util.List;
@@ -20,4 +21,5 @@ public interface ClueMapper {
 
     int deleteClue(String id);
 
+    int delete(String clueId);
 }

@@ -1,10 +1,12 @@
 package com.bjpowernode.controllers;
 
 import com.bjpowernode.domain.Clue;
+import com.bjpowernode.domain.Tran;
 import com.bjpowernode.service.ClueActivityRelationService;
 import com.bjpowernode.service.ClueRemarkService;
 import com.bjpowernode.service.ClueService;
 import com.bjpowernode.service.UserService;
+import com.bjpowernode.utils.DateTimeUtil;
 import com.bjpowernode.utils.UUIDUtil;
 import com.github.pagehelper.PageInfo;
 import org.directwebremoting.annotations.RemoteMethod;
@@ -65,5 +67,23 @@ public class ClueController {
         return "clue/detail";
     }
 
+    @RequestMapping("/convert.do")
+    public ModelAndView doConvert(String id,ModelAndView mv){
+        mv.addObject("clue",clueService.getClueById(id));
+        mv.setViewName("clue/convert");
+        return mv;
+    }
+
+    @RequestMapping("/insertContact.do")
+    public String doInsertContact(Tran tran,String clueId,String flag,HttpServletResponse response){
+        if ("a".equals(flag)){
+            tran.setId(UUIDUtil.getUUID());
+            tran.setCreateTime(DateTimeUtil.getSysTime());
+        }else{
+            tran=null;
+        }
+        clueService.addConvert(tran,clueId);
+        return "logins";
+    }
 
 }

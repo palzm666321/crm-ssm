@@ -204,6 +204,62 @@
       delete from tbl_clue where id=#{id}
 
   </delete>
+    
+    <insert id="addContactTran">
+
+        insert into tbl_tran
+        (
+            id,
+            owner,
+            money,
+            name,
+            expectedDate,
+            customerId,
+            stage,
+            type,
+            source,
+            activityId,
+            contactsId,
+            createBy,
+            createTime,
+            editBy,
+            editTime,
+            description,
+            contactSummary,
+            nextContactTime
+
+
+        )
+        values
+        (
+            #{id},
+            #{owner},
+            #{money},
+            #{name},
+            #{expectedDate},
+            #{customerId},
+            #{stage},
+            #{type},
+            #{source},
+            #{activityId},
+            #{contactsId},
+            #{createBy},
+            #{createTime},
+            #{editBy},
+            #{editTime},
+            #{description},
+            #{contactSummary},
+            #{nextContactTime}
+
+        )
+
+    </insert>
+
+    <delete id="delete">
+
+        delete from tbl_clue where id=#{id}
+
+    </delete>
 
 </mapper>
 

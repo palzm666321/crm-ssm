@@ -8,6 +8,9 @@ import java.util.Map;
 
 public interface ClueActivityRelationMapper {
 
+    List<ClueActivityRelation> selectByClueId(String clueId);
+
     int addClueActivityRelation(ClueActivityRelation clueActivityRelation);
 
+    int delete(ClueActivityRelation clueActivityRelation);
 }

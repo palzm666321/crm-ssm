@@ -243,7 +243,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<h3>${clue.fullname}${clue.appellation} <small>${clue.job}</small></h3>
 		</div>
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
-			<button type="button" class="btn btn-default" onclick="window.location.href='convert.html';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
+			<button type="button" class="btn btn-default" onclick="window.location.href='clue/convert.do?id=${clue.id}';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 		</div>
 	</div>
 	
@@ -385,20 +385,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 						</tr>
 					</thead>
 					<tbody id="ClueRemarkBody">
-
-					<%--<c:forEach items="${clueActivityRelationList}" var="c">
-
-						<tr id="'${c.relationId}'">
-							<td>${c.name}</td>
-							<td>${c.startDate}</td>
-							<td>${c.endDate}</td>
-							<td>${c.owner}</td>
-							<td><a href="javascript:void(0);" onclick="remove('${c.relationId}')" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-						</tr>
-
-					</c:forEach>--%>
-
-
 
 					</tbody>
 				</table>

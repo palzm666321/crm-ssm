@@ -17,6 +17,12 @@
 
     </insert>
 
+    <delete id="delete">
+
+        delete from tbl_clue_remark where id=#{id}
+
+    </delete>
+
 </mapper>
 
 

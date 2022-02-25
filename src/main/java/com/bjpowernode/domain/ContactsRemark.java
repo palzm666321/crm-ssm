@@ -59,7 +59,18 @@ public class ContactsRemark {
 	public void setContactsId(String contactsId) {
 		this.contactsId = contactsId;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "ContactsRemark{" +
+				"id='" + id + '\'' +
+				", noteContent='" + noteContent + '\'' +
+				", createTime='" + createTime + '\'' +
+				", createBy='" + createBy + '\'' +
+				", editTime='" + editTime + '\'' +
+				", editBy='" + editBy + '\'' +
+				", editFlag='" + editFlag + '\'' +
+				", contactsId='" + contactsId + '\'' +
+				'}';
+	}
 }

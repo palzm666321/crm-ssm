@@ -1,6 +1,7 @@
 package com.bjpowernode.service;
 
 import com.bjpowernode.domain.Clue;
+import com.bjpowernode.domain.Tran;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -55,4 +56,5 @@ public interface ClueService {
      */
     PageInfo<Clue> splitPage(Clue clue,Integer pageNo,Integer pageSize);
 
+    boolean addConvert(Tran tran, String clueId);
 }
